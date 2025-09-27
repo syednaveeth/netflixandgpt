@@ -1,46 +1,28 @@
-import React from "react";
-//import { useSelector } from "react-redux";
 import Header from "./Header";
-import { auth } from "../Utils/firebase";
-import { onAuthStateChanged } from "firebase/auth";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { addUser, removeUser } from "../Utils/userSlice";
 
+//import { useSelector } from "react-redux";
+import { useNowplayingMovies } from "../Hooks/useNowPlayingmovies";
+import MainContainer from "./MainContainer";
 const Browser = () => {
-  // hook must be here
-  // const email = useSelector((store) => store.user?.email);
-  const Dispatch = useDispatch();
-
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      //  on AuthStateChanged get a sign-in user information
-      if (user) {
-        //0
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/auth.user
-        const { uid, email, password, displayName, photoURL } = user;
-
-        Dispatch(
-          addUser({
-            uid: uid,
-            email: email,
-            password: password,
-            displayName: displayName,
-            photoURL: photoURL,
-          })
-        );
-
-        // ...
-      } else {
-        Dispatch(removeUser());
-      }
-    });
-  }, []);
-
+  useNowplayingMovies();
+  //const movietitle = useSelector((store) => store?.movies?.getnowplayingMovie);
   return (
-    <div className="w-screen bg-black  ">
-      <Header />
+    <div>
+      <div className="w-screen bg-black  ">
+        <Header />
+      </div>
+
+      <MainContainer />
+      {/* <h1> {movietitle}</h1> */}
+
+      {/* {movietitle &&
+        movietitle.map((movie) => (
+          <ul>
+            <img
+              src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
+            />
+          </ul>
+        ))} */}
     </div>
   );
 };

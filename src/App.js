@@ -4,11 +4,12 @@ import { appstore } from "./Utils/appstore";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./Components/Login";
 import Browser from "./Components/Browser";
+
 function App() {
   const approuter = createBrowserRouter([
     { path: "/", element: <Login /> },
 
-    { path: "/browser", element: <Browser /> },
+    { path: "/browse", element: <Browser /> },
   ]);
 
   return (
