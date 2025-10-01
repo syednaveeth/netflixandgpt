@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./Components/Login";
 import Browser from "./Components/Browser";
 
+import "line-awesome/dist/line-awesome/css/line-awesome.css";
 function App() {
   const approuter = createBrowserRouter([
     { path: "/", element: <Login /> },

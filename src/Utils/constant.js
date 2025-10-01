@@ -10,3 +10,14 @@ export const Api_options = {
       "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3MmM0ZDE4ODJhNDM4ZjY5OTJlNGRlMGY5MDExYTgyZCIsIm5iZiI6MTc1ODcxODgxOS4wNTc5OTk4LCJzdWIiOiI2OGQzZWI2M2EyN2Y3ZWJhMDY4OTdmNWYiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.cpYVa_GbtfvoHZZEmYUZDigxdjrjypfi2ui9hPvmQgQ",
   },
 };
+
+export const IMG_CDN = "https://image.tmdb.org/t/p/w500/";
+
+export const bgImg =
+  "https://assets.nflxext.com/ffe/siteui/vlv3/0b0dad79-ad4d-42b7-b779-8518da389976/web/IN-en-20250908-TRIFECTA-perspective_0647b106-80e1-4d25-9649-63099752b49a_small.jpg";
+
+export const language = [
+  { itentifier: "en", Language: "English" },
+  { itentifier: "Tamil", Language: "Tamil" },
+  { itentifier: "Malayalam", Language: "Malayalam" },
+];

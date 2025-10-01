@@ -1,28 +1,34 @@
 import Header from "./Header";
 
-//import { useSelector } from "react-redux";
 import { useNowplayingMovies } from "../Hooks/useNowPlayingmovies";
 import MainContainer from "./MainContainer";
+import SecoundaryContainer from "./SecoundaryContainer";
+import { usePopulerMovie } from "../Hooks/usePopulerMovie";
+import { useTopRatedMovies } from "../Hooks/useTopRatedMovies";
+import { useUpComingMovies } from "../Hooks/useUpComingMovies";
+import { useSelector } from "react-redux";
+import GptSearchWorks from "../Components/netflixGpt/GptSearchWorks";
 const Browser = () => {
   useNowplayingMovies();
-  //const movietitle = useSelector((store) => store?.movies?.getnowplayingMovie);
+  usePopulerMovie();
+  useTopRatedMovies();
+  useUpComingMovies();
+
+  const gptSearch = useSelector((store) => store.gptSlice.showGptSearch);
+
   return (
     <div>
       <div className="w-screen bg-black  ">
         <Header />
       </div>
-
-      <MainContainer />
-      {/* <h1> {movietitle}</h1> */}
-
-      {/* {movietitle &&
-        movietitle.map((movie) => (
-          <ul>
-            <img
-              src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
-            />
-          </ul>
-        ))} */}
+      {gptSearch ? (
+        <GptSearchWorks />
+      ) : (
+        <>
+          <MainContainer />
+          <SecoundaryContainer />
+        </>
+      )}
     </div>
   );
 };

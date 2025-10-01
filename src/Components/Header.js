@@ -9,9 +9,12 @@ import { useEffect } from "react";
 import { auth } from "../Utils/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { addUser, removeUser } from "../Utils/userSlice";
-
+//import { useNavigate } from "react-router-dom";
+import { addGptSearchdata } from "../Utils/gptSlice";
+//C:\Users\syedn\Desktop\netflixandgpt\src\Utils\gptSlice.js
+import { toggleShowGptSearch } from "../Utils/gptSlice";
 const Header = () => {
   //const navigate = useNavigate();
 
@@ -57,21 +60,38 @@ const Header = () => {
   };
 
   const user = useSelector((store) => store?.user);
+
+  /*  const gptSearchhandler = () => {
+    Dispatch(addGptSearchdata(true));
+  }; */
+
+  const showGptSearch = useSelector((store) => store.gptSlice.showGptSearch);
+
   return (
     <div className="absolute z-10 justify-between flex bg-gradient-to-b from-black w-screen h-25 ">
       <img className="h-20 ml-20 mt-3" src={Netflixlogo} alt="logo" />
       {user && (
-        <div>
-          <img
-            alt="userlogo"
-            className="h-20 w-20 mx-5 mt-2 p-2 rounded-[50px]"
-            src={user.photoURL}
-          />
-          <div
-            onClick={handlingSignout}
-            className="text-white font-bold text-center cursor-pointer pb-2"
-          >
-            signOut
+        <div className="flex">
+          <div className="mt-10 mr-20 ">
+            <butten
+              onClick={() => Dispatch(toggleShowGptSearch())}
+              className="  p-2 border rounded-lg bg-black cursor-pointer text-red-500 font-bold border-gray-400  "
+            >
+              {showGptSearch ? "Home" : "Gpt Search"}
+            </butten>
+          </div>
+          <div>
+            <img
+              alt="userlogo"
+              className="h-20 w-20 mx-5 mt-2 p-2 rounded-[50px]"
+              src={user.photoURL}
+            />
+            <div
+              onClick={handlingSignout}
+              className="text-white font-bold text-center cursor-pointer pb-2"
+            >
+              signOut
+            </div>
           </div>
         </div>
       )}

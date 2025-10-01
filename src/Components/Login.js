@@ -14,6 +14,8 @@ import { addUser } from "../Utils/userSlice";
 
 //import { userimg } from "../Utils/constant";
 import userimage from "../Utils/image/users.png";
+
+import { bgImg } from "../Utils/constant";
 const Login = () => {
   const Dispatch = useDispatch();
   const [issignin, setissignin] = useState(true);
@@ -110,7 +112,7 @@ const Login = () => {
       {/* ... rest of your JSX code ... */}
       <img
         className="h-screen w-full object-cover absolute"
-        src="https://assets.nflxext.com/ffe/siteui/vlv3/0b0dad79-ad4d-42b7-b779-8518da389976/web/IN-en-20250908-TRIFECTA-perspective_0647b106-80e1-4d25-9649-63099752b49a_small.jpg"
+        src={bgImg}
         alt="background"
       />
       <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-black to-transparent"></div>
