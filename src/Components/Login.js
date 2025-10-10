@@ -1,5 +1,5 @@
 // Login.js
-import React, { use, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import Header from "./Header";
 import { Validate } from "../Utils/Validate";
 import { auth } from "../Utils/firebase";
@@ -8,24 +8,22 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-
 import { useDispatch } from "react-redux";
 import { addUser } from "../Utils/userSlice";
-
-//import { userimg } from "../Utils/constant";
 import userimage from "../Utils/image/users.png";
-
 import { bgImg } from "../Utils/constant";
+
 const Login = () => {
   const Dispatch = useDispatch();
   const [issignin, setissignin] = useState(true);
-  const [validateData, setvalidateData] = useState();
+  const [validateData, setvalidateData] = useState("");
 
   const email = useRef();
   const password = useRef();
   const username = useRef();
 
-  const HandlingError = () => {
+  const HandlingError = (e) => {
+    e.preventDefault();
     const validatedata = Validate(
       email.current.value,
       password.current.value,
@@ -49,25 +47,15 @@ const Login = () => {
             photoURL: userimage,
           })
             .then(() => {
-              const {
-                uid,
-                email,
-                password,
-                displayName,
-                photoURL,
-              } = auth.currentUser;
-
+              const { uid, email, displayName, photoURL } = auth.currentUser;
               Dispatch(
                 addUser({
                   uid: uid,
                   email: email,
-                  password: password,
                   displayName: displayName,
                   photoURL: photoURL,
                 })
               );
-
-              // Profile updated successfully.
             })
             .catch((error) => {
               setvalidateData("Error updating profile: " + error.message);
@@ -89,7 +77,6 @@ const Login = () => {
       )
         .then((userCredential) => {
           // User signed in.
-          // The onAuthStateChanged listener in Browser.js will handle navigation.
         })
         .catch((error) => {
           setvalidateData(
@@ -103,59 +90,82 @@ const Login = () => {
 
   const toggleLoginhandler = () => {
     setissignin(!issignin);
-    setvalidateData(""); // Clear validation message on toggle
+    setvalidateData("");
   };
 
   return (
-    <div className="relative h-screen w-full">
+    <div className="relative min-h-screen w-full overflow-hidden">
       <Header />
-      {/* ... rest of your JSX code ... */}
       <img
-        className="h-screen w-full object-cover absolute"
+        className="absolute inset-0 w-full h-full object-cover"
         src={bgImg}
         alt="background"
       />
-      <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-black to-transparent"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black/80"></div>
+
       <form
-        onSubmit={(e) => e.preventDefault()}
-        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black/75 border border-gray-600 p-12 rounded-lg w-96 space-y-6 text-white"
+        onSubmit={HandlingError}
+        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-11/12 max-w-md bg-black/85 backdrop-blur-sm border border-gray-700 rounded-xl p-6 sm:p-8 md:p-10 space-y-4 sm:space-y-6 text-white shadow-2xl"
       >
-        <h2 className="text-2xl font-bold text-center">
+        <h2 className="text-2xl sm:text-3xl font-bold text-center text-white">
           {issignin ? "Sign In" : "Sign Up"}
         </h2>
+
         {!issignin && (
-          <input
-            ref={username}
-            type="text"
-            placeholder="User Name"
-            className="w-full p-3 rounded bg-gray-800 outline-none focus:ring-2 focus:ring-red-600"
-          />
+          <div>
+            <input
+              ref={username}
+              type="text"
+              placeholder="Full Name"
+              className="w-full p-3 sm:p-4 rounded-lg bg-gray-900/80 border border-gray-600 outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent text-white placeholder-gray-400 text-sm sm:text-base"
+            />
+          </div>
         )}
-        <input
-          type="email"
-          placeholder="Email"
-          ref={email}
-          className="w-full p-3 rounded bg-gray-800 outline-none focus:ring-2 focus:ring-red-600"
-        />
-        <input
-          ref={password}
-          type="password"
-          placeholder="Password"
-          className="w-full p-3 rounded bg-gray-800 outline-none focus:ring-2 focus:ring-red-600"
-        />
+
+        <div>
+          <input
+            ref={email}
+            type="email"
+            placeholder="Email address"
+            className="w-full p-3 sm:p-4 rounded-lg bg-gray-900/80 border border-gray-600 outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent text-white placeholder-gray-400 text-sm sm:text-base"
+          />
+        </div>
+
+        <div>
+          <input
+            ref={password}
+            type="password"
+            placeholder="Password"
+            className="w-full p-3 sm:p-4 rounded-lg bg-gray-900/80 border border-gray-600 outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent text-white placeholder-gray-400 text-sm sm:text-base"
+          />
+        </div>
+
         <button
-          onClick={HandlingError}
-          className="w-full bg-red-600 py-3 rounded font-semibold hover:bg-red-700 transition"
+          type="submit"
+          className="w-full bg-red-600 hover:bg-red-700 py-3 sm:py-4 rounded-lg font-semibold text-white transition-all duration-300 transform hover:scale-105 active:scale-95 text-sm sm:text-base"
         >
           {issignin ? "Sign In" : "Sign Up"}
         </button>
-        <p className="text-red-500 font-bold ">{validateData}</p>
-        <p className="cursor-pointer" onClick={toggleLoginhandler}>
-          {issignin
-            ? "New to Netflix? Sign up now."
-            : "Already Registered? Sign In Now"}
+
+        {validateData && (
+          <p className="text-red-400 text-xs sm:text-sm text-center font-medium bg-red-900/20 py-2 px-3 rounded-lg">
+            {validateData}
+          </p>
+        )}
+
+        <p className="text-gray-300 text-center text-xs sm:text-sm mt-4 sm:mt-6">
+          {issignin ? "New to MOVIEFLOW?" : "Already have an account?"}{" "}
+          <span
+            onClick={toggleLoginhandler}
+            className="text-white hover:text-red-400 font-semibold cursor-pointer transition-colors duration-200 ml-1"
+          >
+            {issignin ? "Sign up now." : "Sign in now."}
+          </span>
         </p>
       </form>
+
+      {/* Additional responsive background elements */}
+      <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-black to-transparent"></div>
     </div>
   );
 };

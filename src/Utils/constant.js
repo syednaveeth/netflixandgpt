@@ -21,3 +21,5 @@ export const language = [
   { itentifier: "Tamil", Language: "Tamil" },
   { itentifier: "Malayalam", Language: "Malayalam" },
 ];
+
+export const GptApiKey = "AIzaSyBRVIjH2ZBjyBoSTBrleaqkV6fVrRlGhDo";
