@@ -48,6 +48,8 @@ const Header = () => {
       });
   };
 
+  const nameofuser = useSelector((store) => store?.user?.displayName);
+
   return (
     <div className="z-50 w-full flex justify-between items-center px-4 sm:px-6 lg:px-8 py-3 sm:py-4  backdrop-blur-sm">
       {/* Logo - Proper sizing */}
@@ -80,7 +82,7 @@ const Header = () => {
             {/* User Info */}
             <div className="hidden sm:flex flex-col">
               <span className="text-white text-xs lg:text-sm leading-tight">
-                {user.displayName?.split(" ")[0] || "User"}
+                {nameofuser}
               </span>
               <button
                 onClick={handlingSignout}

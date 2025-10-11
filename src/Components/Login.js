@@ -116,7 +116,7 @@ const Login = () => {
             <input
               ref={username}
               type="text"
-              placeholder="Full Name"
+              placeholder="Full Name (3–16 letters or numbers)"
               className="w-full p-3 sm:p-4 rounded-lg bg-gray-900/80 border border-gray-600 outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent text-white placeholder-gray-400 text-sm sm:text-base"
             />
           </div>
@@ -135,7 +135,7 @@ const Login = () => {
           <input
             ref={password}
             type="password"
-            placeholder="Password"
+            placeholder="Ex: Naveeth@123 (Min 8 chars, A–Z , a–z ,0–9 ,symbol)"
             className="w-full p-3 sm:p-4 rounded-lg bg-gray-900/80 border border-gray-600 outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent text-white placeholder-gray-400 text-sm sm:text-base"
           />
         </div>
