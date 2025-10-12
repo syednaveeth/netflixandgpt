@@ -5,14 +5,14 @@ import { addLanguageinfo } from "../../Utils/constantSlice";
 import { lang } from "../../Utils/languageConstant";
 import { useRef } from "react";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { addGptSearchMovies } from "../../Utils/gptSlice";
+import { addGptSearchMovies, addloadingimg } from "../../Utils/gptSlice";
 
 //import { GptApiKey } from "../../Utils/constant";
 
 export default function GPTSearch() {
   const dispatch = useDispatch();
   const [isTyping, setIsTyping] = useState("");
-
+  const [loading, setloading] = useState(null);
   const selectedlanguage = useSelector(
     (store) => store?.constantSlice?.languageinfo
   );
@@ -37,6 +37,8 @@ export default function GPTSearch() {
       "only give me name of 5 movies, comma seperated like the example result given ahead. Example Result: Gader,sholay,Don,Golmaal";
 
     async function runTest() {
+      dispatch(addloadingimg(true));
+
       const genAI = new GoogleGenerativeAI(API_KEY);
 
       const model = genAI.getGenerativeModel({ model: MODEL_NAME });
@@ -62,7 +64,10 @@ export default function GPTSearch() {
           showGptMoviesname: apiresult,
         })
       );
+
+      dispatch(addloadingimg(false));
     }
+
     runTest();
   };
 
